@@ -12,13 +12,8 @@ const TablaProductos = ({
   paginaActual,
   establecerPaginaActual,
   abrirModalEliminacion,
-  abrirModalEdicion,
-  categorias
+  abrirModalEdicion
 }) => {
-  const obtenerNombreCategoria = (idCategoria) => {
-    const categoria = categorias.find(cat => cat.id_categoria === idCategoria);
-    return categoria ? categoria.nombre_categoria : 'Categoría no encontrada';
-  };
 
   if (cargando) {
     return <div>Cargando productos...</div>;
@@ -35,7 +30,7 @@ const TablaProductos = ({
             <th>ID Producto</th>
             <th>Nombre Producto</th>
             <th>Descripción</th>
-            <th>Categoría</th>
+            <th>ID Categoría</th>
             <th>Precio</th>
             <th>Stock</th>
             <th>Imagen</th>
@@ -48,7 +43,7 @@ const TablaProductos = ({
               <td>{producto.id_producto}</td>
               <td>{producto.nombre_producto}</td>
               <td>{producto.descripcion_producto}</td>
-              <td>{obtenerNombreCategoria(producto.id_categoria)}</td>
+              <td>{producto.id_categoria}</td>
               <td>{producto.precio_unitario}</td>
               <td>{producto.stock}</td>
               <td>
