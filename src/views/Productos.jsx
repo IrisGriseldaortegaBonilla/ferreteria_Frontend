@@ -341,6 +341,11 @@ const Productos = () => {
         <br />
         <h4>Productos</h4>
         <Row>
+          {mensajeExito && ( //para que este visible en pantalla la confirmación
+          <Alert variant="success" onClose={() => setMensajeExito(null)} dismissible>
+            {mensajeExito}
+          </Alert>
+        )}
 
           <Col lg={2} md={4} sm={4} xs={5}>
             <Button 
