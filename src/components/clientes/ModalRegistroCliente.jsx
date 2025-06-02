@@ -2,13 +2,54 @@ import React from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 
 const ModalRegistroCliente = ({
-  mostrarModal,
+   mostrarModal,
   setMostrarModal,
   nuevoCliente,
   manejarCambioInput,
   agregarCliente,
   errorCarga,
 }) => {
+
+const validarLetras =(e) =>{
+  const charCode = e.Which ? e.Which : e.keyCode;
+  //Permitir solo letras  (A-Z, a-z)
+  if( 
+    (charCode < 65 || charCode >90) && //Letras mayusculas
+    (charCode < 97 || charCode >122) && //Letras minusculas
+    charCode !== 8 && //Retroceso
+    charCode !== 46 && //Borrar
+    charCode !==9 //Tab
+    ){
+      e.preventDefault(); //Evita que se escriba el caracter
+    }
+  };
+
+  const validacionFormulario = () => {
+  return (
+    nuevoCliente.primer_nombre.trim() !== "" &&
+    nuevoCliente.segundo_nombre.trim() !== "" &&
+    nuevoCliente.primer_apellido.trim() !== "" &&
+    nuevoCliente.segundo_apellido.trim() !== "" &&
+    nuevoCliente.celular.trim() !== "" &&
+    nuevoCliente.direccion.trim() !== "" &&
+    nuevoCliente.cedula.trim() !== ""
+  );
+};
+
+    const validarNumeros = (e) => {
+      const charCode = e.which ? e.which : e.keyCode;
+      // Permitir solo números (0-9), retroceso, borrar y Tab
+      if (
+        (charCode < 48 || charCode > 57) && // Números (0-9)
+        charCode !== 8 &&  // Retroceso
+        charCode !== 46 && // Borrar
+        charCode !== 9     // Tab
+      ) {
+        e.preventDefault(); // Evita que se escriba el carácter
+      }
+    };
+
+
   return (
     <Modal show={mostrarModal} onHide={() => setMostrarModal(false)}>
       <Modal.Header closeButton>
@@ -23,6 +64,7 @@ const ModalRegistroCliente = ({
               name="primer_nombre"
               value={nuevoCliente.primer_nombre}
               onChange={manejarCambioInput}
+              onKeyDown={validarLetras}
               placeholder="Ingresa el primer nombre"
               maxLength={20}
               required
@@ -35,6 +77,7 @@ const ModalRegistroCliente = ({
               name="segundo_nombre"
               value={nuevoCliente.segundo_nombre}
               onChange={manejarCambioInput}
+              onKeyDown={validarLetras}
               placeholder="Ingresa el segundo nombre (opcional)"
               maxLength={20}
             />
@@ -46,6 +89,7 @@ const ModalRegistroCliente = ({
               name="primer_apellido"
               value={nuevoCliente.primer_apellido}
               onChange={manejarCambioInput}
+              onKeyDown={validarLetras}
               placeholder="Ingresa el primer apellido"
               maxLength={20}
               required
@@ -58,6 +102,7 @@ const ModalRegistroCliente = ({
               name="segundo_apellido"
               value={nuevoCliente.segundo_apellido}
               onChange={manejarCambioInput}
+              onKeyDown={validarLetras}
               placeholder="Ingresa el segundo apellido (opcional)"
               maxLength={20}
             />
@@ -98,6 +143,7 @@ const ModalRegistroCliente = ({
               maxLength={14}
               required
             />
+            
           </Form.Group>
           {errorCarga && (
             <div className="text-danger mt-2">{errorCarga}</div>
@@ -110,12 +156,18 @@ const ModalRegistroCliente = ({
         }}>
           Cancelar
         </Button>
-        <Button variant="primary" onClick={agregarCliente}>
+        <Button variant="primary" 
+        onClick={agregarCliente}
+        disabled={!validacionFormulario()}
+        >
           Guardar Cliente
         </Button>
       </Modal.Footer>
     </Modal>
+
+    
   );
 };
+
 
 export default ModalRegistroCliente;
