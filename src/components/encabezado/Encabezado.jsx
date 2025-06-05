@@ -216,7 +216,7 @@ const Encabezado = () => {
               {/* Lógica condicional para mostrar Cerrar Sesión o Iniciar Sesión */}
               {estaLogueado ? (
                 // Opción de cerrar sesión
-                                <Nav.Link
+                <Nav.Link
                   onClick={cerrarSesion}
                   className={estaColapsado ? "text-black" : "text-white"}
                 >
